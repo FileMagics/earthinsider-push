@@ -29,10 +29,8 @@
                 if (permission === 'granted') {
                     document.getElementById('status-text').innerText = "Registering Background Service...";
                     
-                    // FIX 1: Smart Path
                     const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', { scope: './' });
                     
-                    // FIX 2: Wait for Service Worker to be 100% Ready
                     await navigator.serviceWorker.ready;
                     
                     document.getElementById('status-text').innerText = "Generating Secure Token... (Please wait)";
@@ -63,7 +61,6 @@
                     document.body.innerHTML = "<h2 style='color:#f44336'>❌ Permission Denied</h2><p>You blocked notifications.</p>";
                 }
             } catch (error) {
-                // FIX 3: Agar fail hua toh lamba red error dikhayega
                 document.getElementById('status-text').innerHTML = "<br><span style='color:#ff5252; font-size:16px;'><b>Error Details:</b> " + error.message + "</span>";
             }
         }
