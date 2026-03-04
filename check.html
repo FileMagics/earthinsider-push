@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Permission Check</title>
+</head>
+<body>
+    <script defer>
+        window.parent.postMessage({ 
+            action: 'check_permission', 
+            status: Notification.permission 
+        }, '*');
+    </script>
+</body>
+</html>
