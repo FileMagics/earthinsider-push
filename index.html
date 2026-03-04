@@ -6,27 +6,11 @@
     <title>Enable Alerts - Earth Insider</title>
     <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
     <style>
-        body {
-            text-align: center; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin-top: 60px; 
-            background-color: #121212; 
-            color: #ffffff;
-        }
+        body { text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: 60px; background-color: #121212; color: #ffffff; }
         h2 { font-weight: 600; letter-spacing: 0.5px; }
         #status-text { font-size: 15px; color: #b3b3b3; margin-top: 20px; line-height: 1.6; }
         .error { color: #f44336; font-weight: bold; }
-        /* Professional Loading Spinner */
-        .loader {
-            border: 3px solid #2a2a2a;
-            border-top: 3px solid #d32f2f;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-            display: block;
-        }
+        .loader { border: 3px solid #2a2a2a; border-top: 3px solid #d32f2f; border-radius: 50%; width: 26px; height: 26px; animation: spin 1s linear infinite; margin: 20px auto; display: block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -77,11 +61,20 @@
 
                         if(response.ok) {
                             spinner.style.display = 'none';
-                            // Ultimate Success Message
-                            document.body.innerHTML = "<h2 style='color:#4CAF50; margin-top: 80px;'>✅ Subscription Confirmed!</h2><p style='color:#b3b3b3; line-height: 1.6;'>You are now securely registered for live updates.<br>This window will close automatically in 2 seconds...</p>";
                             
-                            window.opener?.postMessage({ action: 'permission_granted' }, '*');
-                            setTimeout(() => window.close(), 2500);
+                            document.body.innerHTML = "<h2 style='color:#4CAF50; margin-top: 80px;'>✅ Subscription Confirmed!</h2><p style='color:#b3b3b3; line-height: 1.6;'>You are now securely registered for live updates.<br>Redirecting to homepage...</p>";
+                            
+                            if(window.opener) {
+                                window.opener.postMessage({ action: 'permission_granted' }, '*');
+                            }
+                            
+                            setTimeout(() => {
+                                window.close();
+
+                                
+                                window.location.href = "https://www.earthinsider.in";
+                            }, 2000);
+
                         } else {
                             spinner.style.display = 'none';
                             statusText.innerHTML = `<span class='error'>Server Authentication Failed (Error: ${response.status})</span>`;
@@ -89,7 +82,12 @@
                     }
                 } else {
                     spinner.style.display = 'none';
-                    document.body.innerHTML = "<h2 style='color:#f44336; margin-top: 80px;'>❌ Permission Denied</h2><p style='color:#b3b3b3;'>Push notifications are blocked.<br>You can safely close this window.</p>";
+                    document.body.innerHTML = "<h2 style='color:#f44336; margin-top: 80px;'>❌ Permission Denied</h2><p style='color:#b3b3b3;'>Push notifications are blocked.<br>Redirecting to homepage...</p>";
+                    
+                    setTimeout(() => {
+                        window.close();
+                        window.location.href = "https://www.earthinsider.in";
+                    }, 2500);
                 }
             } catch (error) {
                 spinner.style.display = 'none';
