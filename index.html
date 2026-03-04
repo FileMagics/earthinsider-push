@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Allow Notifications - Earth Insider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="text-align:center; font-family:sans-serif; margin-top:50px; background-color: #1a1a1a; color: white;">
+    
+    <h2>Earth Insider News</h2>
+    <p id="status-text">Connecting to secure server... Please click <b>Allow</b> when asked.</p>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-messaging.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDf3nXOyLE0Z5vfCNLvHI3A_U8PsVXG3jE",
+            projectId: "n8n-notification-push",
+            messagingSenderId: "472906773403",
+            appId: "1:472906773403:web:d08f0b6b3991790c64673e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        async function startEngine() {
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    document.getElementById('status-text').innerText = "Generating Secure Token...";
+                    
+                    const vapidKey = 'BJ4ZSeKIJU4iHS5Bzn8j3tyd9cp6fqTTZFrL7iq47rd5jVLZ2cuEOdM1RXHdJ9-EcHaM18MU_x1VBtetMaaGyN0';
+                    const currentToken = await getToken(messaging, { vapidKey });
+
+                    if (currentToken) {
+                        document.getElementById('status-text').innerText = "Sending to Database...";
+                        
+                        await fetch('https://n8n-push-live-server.onrender.com/webhook/add-subscriber', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ token: currentToken })
+                        });
+
+                        document.body.innerHTML = "<h2 style='color:#4CAF50'>✅ Subscribed Successfully!</h2><p>Closing window...</p>";
+                        setTimeout(() => window.close(), 2500); // 2.5 second baad popup apne aap band ho jayega
+                    }
+                } else {
+                    document.body.innerHTML = "<h2 style='color:#f44336'>❌ Permission Denied</h2><p>You blocked notifications. You can close this window.</p>";
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('status-text').innerText = "System Error. Please try again.";
+            }
+        }
+
+        // Page load hote hi turant permission mangega
+        startEngine();
+    </script>
+</body>
+</html>
+
