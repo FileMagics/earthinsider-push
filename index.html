@@ -7,7 +7,7 @@
 <body style="text-align:center; font-family:sans-serif; margin-top:50px; background-color: #1a1a1a; color: white;">
     
     <h2>Earth Insider News</h2>
-    <p id="status-text">Connecting to secure server... Please click <b>Allow</b> when asked.</p>
+    <p id="status-text" style="font-size: 18px;">Connecting to secure server... Please click <b>Allow</b> when asked.</p>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -29,13 +29,15 @@
                 if (permission === 'granted') {
                     document.getElementById('status-text').innerText = "Registering Background Service...";
                     
-                    // Yahan humne exact path set kar diya hai
-                    const registration = await navigator.serviceWorker.register('/earthinsider-push/firebase-messaging-sw.js');
+                    // FIX 1: Smart Path
+                    const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js', { scope: './' });
                     
-                    document.getElementById('status-text').innerText = "Generating Secure Token...";
+                    // FIX 2: Wait for Service Worker to be 100% Ready
+                    await navigator.serviceWorker.ready;
+                    
+                    document.getElementById('status-text').innerText = "Generating Secure Token... (Please wait)";
                     const vapidKey = 'BJ4ZSeKIJU4iHS5Bzn8j3tyd9cp6fqTTZFrL7iq47rd5jVLZ2cuEOdM1RXHdJ9-EcHaM18MU_x1VBtetMaaGyN0';
                     
-                    // Token generate karte waqt humne path file sath bhej di
                     const currentToken = await getToken(messaging, { 
                         vapidKey: vapidKey,
                         serviceWorkerRegistration: registration 
@@ -51,18 +53,18 @@
                         });
 
                         if(response.ok) {
-                            document.body.innerHTML = "<h2 style='color:#4CAF50'>✅ Subscribed Successfully!</h2><p>Closing window...</p>";
-                            setTimeout(() => window.close(), 2500); // Popup ab automatic close hoga
+                            document.body.innerHTML = "<h2 style='color:#4CAF50'>✅ Subscribed Successfully!</h2><p>Closing window in 2 seconds...</p>";
+                            setTimeout(() => window.close(), 2500);
                         } else {
-                            document.getElementById('status-text').innerText = "Server Error: " + response.status;
+                            document.getElementById('status-text').innerHTML = "<span style='color:red'>Server Webhook Error: " + response.status + "</span>";
                         }
                     }
                 } else {
                     document.body.innerHTML = "<h2 style='color:#f44336'>❌ Permission Denied</h2><p>You blocked notifications.</p>";
                 }
             } catch (error) {
-                // Agar koi error aayega toh exact reason screen par dikhega
-                document.getElementById('status-text').innerText = "System Error: " + error.message;
+                // FIX 3: Agar fail hua toh lamba red error dikhayega
+                document.getElementById('status-text').innerHTML = "<br><span style='color:#ff5252; font-size:16px;'><b>Error Details:</b> " + error.message + "</span>";
             }
         }
 
