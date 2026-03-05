@@ -1,11 +1,14 @@
-importScripts('https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.8.1/firebase-messaging-compat.js');
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+    
+    let urlToOpen = "https://www.earthinsider.in";
+    if (event.notification.data && event.notification.data.FCM_MSG && event.notification.data.FCM_MSG.notification && event.notification.data.FCM_MSG.notification.click_action) {
+        urlToOpen = event.notification.data.FCM_MSG.notification.click_action;
+    } else if (event.notification.click_action) {
+        urlToOpen = event.notification.click_action;
+    }
 
-firebase.initializeApp({
-    apiKey: "AIzaSyDf3nXOyLE0Z5vfCNLvHI3A_U8PsVXG3jE",
-    projectId: "n8n-notification-push",
-    messagingSenderId: "472906773403",
-    appId: "1:472906773403:web:d08f0b6b3991790c64673e"
+    event.waitUntil(
+        clients.openWindow(urlToOpen)
+    );
 });
-
-const messaging = firebase.messaging();
