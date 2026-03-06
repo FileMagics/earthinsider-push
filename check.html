@@ -3,42 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>System Endpoint - Earth Insider</title>
+    <title>Click Test - Earth Insider</title>
     <style>
-        body { 
-            background-color: #0a0a0a;
-            color: #00ff00;
-            font-family: 'Courier New', Courier, monospace; 
-            text-align: center; 
-            margin-top: 15vh; 
-        }
-        .console-box { 
-            background: #111; 
-            padding: 30px; 
-            border-radius: 8px; 
-            display: inline-block; 
-            border: 1px solid #333;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.05);
-        }
-        h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; }
-        p { margin: 8px 0; font-size: 14px; color: #888; }
-        .status { color: #00ff00; font-weight: bold; }
+        body { background-color: #121212; color: #ffffff; text-align: center; font-family: sans-serif; margin-top: 15vh; }
+        .success-text { color: #4CAF50; font-size: 26px; font-weight: bold; margin-bottom: 20px;}
+        .url-box { background: #222; padding: 15px; border-radius: 8px; display: inline-block; word-break: break-all; max-width: 80%; color: #00ff00; border: 1px solid #444; }
     </style>
 </head>
 <body>
-    <div class="console-box">
-        <h3>RESTRICTED SYSTEM ENDPOINT</h3>
-        <p>Service: <span class="status">Active & Running</span></p>
-        <p>This is an automated background service worker for Earth Insider.</p>
-        <p>Direct client access is not required.</p>
-        <p style="margin-top: 20px; font-size: 12px; color: #555;">Secured by Earth Insider Network</p>
+    <div id="test-box" style="display: none;">
+        <div class="success-text">✅ Click Test 100% Successful!</div>
+        <p>Browser ne same-domain link open kar diya hai.</p>
+        <p>Target Article ka URL yeh hai:</p>
+        <div class="url-box" id="target-url"></div>
+        <p style="margin-top: 30px; color: #888; font-size: 14px;">(Abhi redirect disable kiya hua hai test karne ke liye)</p>
     </div>
 
     <script defer>
-        window.parent.postMessage({ 
-            action: 'check_permission', 
-            status: Notification.permission 
-        }, '*');
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUrl = urlParams.get('go');
+
+        if (targetUrl) {
+            // Agar link aaya hai (Notification Click), toh UI dikhao, redirect MAT karo
+            document.getElementById('test-box').style.display = 'block';
+            document.getElementById('target-url').innerText = targetUrl;
+        } else {
+            // Agar background (Blogger button) se chal raha hai, toh permission check karo
+            window.parent.postMessage({ action: 'check_permission', status: Notification.permission }, '*');
+        }
     </script>
 </body>
 </html>
