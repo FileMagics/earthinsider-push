@@ -10,17 +10,15 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// 1000000% Working Click Handler (Cross-Domain Supported)
+// Click Handler
 self.addEventListener('notificationclick', function(event) {
-    event.notification.close(); // Click karte hi notification band karo
+    event.notification.close();
 
-    // N8n se aaya hua data wala link nikalo
-    let urlToOpen = "https://www.earthinsider.in";
+    let urlToOpen = "https://push.earthinsider.in"; // Fallback URL
     if (event.notification.data && event.notification.data.click_url) {
         urlToOpen = event.notification.data.click_url;
     }
 
-    // Browser ko direct command - Naya window/tab kholo!
     event.waitUntil(
         clients.openWindow(urlToOpen)
     );
