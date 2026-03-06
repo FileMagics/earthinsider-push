@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure Gateway - Earth Insider</title>
+    <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
+    <style>
+        body { background-color: #050505; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; }
+        .gateway-box { background: #0a0a0a; padding: 40px; border-radius: 4px; display: inline-block; border: 1px solid #1a1a1a; box-shadow: 0 0 15px rgba(0, 255, 0, 0.03); max-width: 500px; text-align: left; }
+        h2 { color: #ffffff; font-weight: normal; letter-spacing: 2px; font-size: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        .log-line { margin: 12px 0; font-size: 13px; color: #888; }
+        .highlight { color: #00ff00; font-weight: bold; }
+        .loader-bar { width: 100%; height: 2px; background: #111; margin-top: 30px; position: relative; overflow: hidden; }
+        .loader-bar::after { content: ''; position: absolute; left: -50%; top: 0; height: 100%; width: 50%; background: #00ff00; animation: load 1s infinite ease-in-out; }
+        @keyframes load { 0% { left: -50%; } 100% { left: 100%; } }
+    </style>
+</head>
+<body>
+    <div class="gateway-box">
+        <h2>SECURE ROUTING GATEWAY</h2>
+        <div class="log-line">> Initializing secure connection... <span class="highlight">[OK]</span></div>
+        <div class="log-line">> Verifying destination payload... <span class="highlight">[OK]</span></div>
+        <div class="log-line">> Establishing encrypted tunnel to Earth Insider...</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <script defer>
+        const urlParams = new URLSearchParams(window.location.search);
+        const destination = urlParams.get('go');
+
+        setTimeout(() => {
+            if (destination) {
+                window.location.replace(destination);
+            } else {
+                window.location.replace("https://www.earthinsider.in");
+            }
+        }, 1500);
+    </script>
+</body>
+</html>
