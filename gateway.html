@@ -6,20 +6,33 @@
 <title>Earth Insider</title>
 <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
 <style>
-body { margin: 0; background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+body { margin: 0; background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 0 15px; }
 
 #system-ui { display: none; font-family: 'Courier New', Courier, monospace; color: #00ff00; text-align: center; width: 100%; }
-.console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); }
-.console-box h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; }
+.console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); max-width: 90%; }
+.console-box h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; font-size: 18px; }
 .console-box p { margin: 8px 0; font-size: 14px; color: #888; }
 .status-green { color: #00ff00; font-weight: bold; }
+.secured-text { margin-top: 20px; font-size: 12px; color: #555; }
 
 #user-ui { display: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff; text-align: center; width: 100%; }
 .user-box { padding: 40px; }
-.user-box h2 { font-weight: 600; letter-spacing: 0.5px; margin-bottom: 25px; }
+.user-box h2 { font-weight: 600; letter-spacing: 0.5px; margin-bottom: 25px; font-size: 24px; }
 .process-text { font-size: 15px; color: #b3b3b3; margin-top: 20px; line-height: 1.6; }
 .loader { border: 3px solid #2a2a2a; border-top: 3px solid #d32f2f; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Desktop Responsiveness */
+@media (min-width: 768px) {
+    .console-box { padding: 50px 70px; }
+    .console-box h3 { font-size: 26px; margin-bottom: 25px; }
+    .console-box p { font-size: 18px; margin: 12px 0; }
+    .secured-text { font-size: 15px; margin-top: 30px; }
+    
+    .user-box h2 { font-size: 34px; margin-bottom: 35px; }
+    .process-text { font-size: 20px; margin-top: 30px; }
+    .loader { width: 45px; height: 45px; border-width: 4px; }
+}
 </style>
 </head>
 <body>
@@ -30,7 +43,7 @@ body { margin: 0; background-color: #121212; display: flex; justify-content: cen
 <p>Service: <span class="status-green">Active & Listening</span></p>
 <p>This endpoint securely routes verified push notification traffic.</p>
 <p>Direct client access is not required.</p>
-<p style="margin-top: 20px; font-size: 12px; color: #555;">Secured by Earth Insider Network</p>
+<p class="secured-text">Secured by Earth Insider Network</p>
 </div>
 </div>
 
@@ -45,12 +58,9 @@ body { margin: 0; background-color: #121212; display: flex; justify-content: cen
 <script defer>
 const urlParams=new URLSearchParams(window.location.search);
 const destination=urlParams.get('go');
-
 if(destination){
 document.getElementById('user-ui').style.display='block';
-setTimeout(()=>{
-window.location.replace(destination);
-},1000);
+setTimeout(()=>{ window.location.replace(destination); },1000);
 }else{
 document.getElementById('system-ui').style.display='block';
 }
