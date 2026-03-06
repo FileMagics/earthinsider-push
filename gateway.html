@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Secure Gateway - Earth Insider</title>
-    <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
-    <style>
-        body { background-color: #050505; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; margin-bottom: 0; }
-        .box { background: #0a0a0a; padding: 40px; border-radius: 4px; display: none; border: 1px solid #1a1a1a; box-shadow: 0 0 15px rgba(0, 255, 0, 0.03); max-width: 500px; margin: 0 auto; text-align: left; }
-        .box.restricted { border-color: #331111; box-shadow: 0 0 15px rgba(255, 0, 0, 0.05); text-align: center; }
-        h2 { font-weight: normal; letter-spacing: 2px; font-size: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; margin-top: 0; text-align: center; }
-        .text-green { color: #00ff00; }
-        .text-red { color: #ff3333; }
-        .text-white { color: #ffffff; }
-        .text-gray { color: #888888; }
-        .log-line { margin: 12px 0; font-size: 13px; color: #888; }
-        .highlight { color: #00ff00; font-weight: bold; }
-        .loader-bar { width: 100%; height: 2px; background: #111; margin-top: 30px; position: relative; overflow: hidden; }
-        .loader-bar::after { content: ''; position: absolute; left: -50%; top: 0; height: 100%; width: 50%; background: #00ff00; animation: load 1s infinite ease-in-out; }
-        @keyframes load { 0% { left: -50%; } 100% { left: 100%; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earth Insider</title>
+<link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
+<style>
+body { margin: 0; background-color: #121212; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+#system-ui { display: none; font-family: 'Courier New', Courier, monospace; color: #00ff00; text-align: center; width: 100%; }
+.console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); }
+.console-box h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; }
+.console-box p { margin: 8px 0; font-size: 14px; color: #888; }
+.status-green { color: #00ff00; font-weight: bold; }
+
+#user-ui { display: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff; text-align: center; width: 100%; }
+.user-box { padding: 40px; }
+.user-box h2 { font-weight: 600; letter-spacing: 0.5px; margin-bottom: 25px; }
+.process-text { font-size: 15px; color: #b3b3b3; margin-top: 20px; line-height: 1.6; }
+.loader { border: 3px solid #2a2a2a; border-top: 3px solid #d32f2f; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
 </head>
 <body>
-    <div id="routing-ui" class="box">
-        <h2 class="text-white">SECURE ROUTING GATEWAY</h2>
-        <div class="log-line">> Initializing secure connection... <span class="highlight">[OK]</span></div>
-        <div class="log-line">> Verifying destination payload... <span class="highlight">[OK]</span></div>
-        <div class="log-line">> Establishing encrypted tunnel...</div>
-        <div class="loader-bar"></div>
-    </div>
 
-    <div id="restricted-ui" class="box restricted">
-        <h2 class="text-red">ACCESS DENIED</h2>
-        <p class="text-white" style="margin-bottom: 10px;">UNAUTHORIZED ENDPOINT REQUEST</p>
-        <p class="text-gray" style="font-size: 13px; margin-bottom: 20px;">Missing valid routing parameters. Connection refused.</p>
-        <p class="text-gray" style="font-size: 11px;">Earth Insider Security Systems</p>
-    </div>
+<div id="system-ui">
+<div class="console-box">
+<h3>SECURE ROUTING GATEWAY</h3>
+<p>Service: <span class="status-green">Active & Listening</span></p>
+<p>This endpoint securely routes verified push notification traffic.</p>
+<p>Direct client access is not required.</p>
+<p style="margin-top: 20px; font-size: 12px; color: #555;">Secured by Earth Insider Network</p>
+</div>
+</div>
 
-    <script defer>
-        const urlParams = new URLSearchParams(window.location.search);
-        const destination = urlParams.get('go');
+<div id="user-ui">
+<div class="user-box">
+<div class="loader"></div>
+<h2>Earth Insider News</h2>
+<p class="process-text">Verifying secure link...<br>Redirecting to the article securely.</p>
+</div>
+</div>
 
-        if (destination) {
-            document.getElementById('routing-ui').style.display = 'block';
-            setTimeout(() => {
-                window.location.replace(destination);
-            }, 1000);
-        } else {
-            document.getElementById('restricted-ui').style.display = 'block';
-        }
-    </script>
+<script defer>
+const urlParams=new URLSearchParams(window.location.search);
+const destination=urlParams.get('go');
+
+if(destination){
+document.getElementById('user-ui').style.display='block';
+setTimeout(()=>{
+window.location.replace(destination);
+},1000);
+}else{
+document.getElementById('system-ui').style.display='block';
+}
+</script>
 </body>
 </html>
