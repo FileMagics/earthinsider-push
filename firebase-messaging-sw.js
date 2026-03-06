@@ -9,17 +9,3 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
-
-// Click Handler
-self.addEventListener('notificationclick', function(event) {
-    event.notification.close();
-
-    let urlToOpen = "https://push.earthinsider.in"; // Fallback URL
-    if (event.notification.data && event.notification.data.click_url) {
-        urlToOpen = event.notification.data.click_url;
-    }
-
-    event.waitUntil(
-        clients.openWindow(urlToOpen)
-    );
-});
