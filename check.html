@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>System Endpoint - Earth Insider</title>
     <style>
-        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; }
-        .console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); }
-        h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; }
+        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; padding: 0 15px; }
+        .console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); max-width: 90%; }
+        h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; font-size: 18px; }
         p { margin: 8px 0; font-size: 14px; color: #888; }
         .status { color: #00ff00; font-weight: bold; }
+        .secured-text { margin-top: 20px; font-size: 12px; color: #555; }
+
+        /* Desktop Responsiveness */
+        @media (min-width: 768px) {
+            .console-box { padding: 50px 70px; }
+            h3 { font-size: 26px; margin-bottom: 25px; }
+            p { font-size: 18px; margin: 12px 0; }
+            .secured-text { font-size: 15px; margin-top: 30px; }
+        }
     </style>
 </head>
 <body>
@@ -18,7 +27,7 @@
         <p>Service: <span class="status">Active & Running</span></p>
         <p>This is an automated background service worker for Earth Insider.</p>
         <p>Direct client access is not required.</p>
-        <p style="margin-top: 20px; font-size: 12px; color: #555;">Secured by Earth Insider Network</p>
+        <p class="secured-text">Secured by Earth Insider Network</p>
     </div>
     <script defer>
         window.parent.postMessage({ action: 'check_permission', status: Notification.permission }, '*');
