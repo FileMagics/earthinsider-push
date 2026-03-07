@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex"> <title>Page Not Found - Earth Insider</title>
-    <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
+    <title>System Endpoint - Earth Insider</title>
     <style>
-        body { text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #ffffff; margin-top: 15vh; }
-        h1 { font-size: 100px; margin: 0; color: #d32f2f; letter-spacing: -2px; }
-        h2 { margin-top: 10px; font-weight: 400; color: #e0e0e0; font-size: 24px; }
-        p { color: #888; font-size: 16px; margin-bottom: 40px; line-height: 1.6; padding: 0 20px; }
-        .btn { background-color: #d32f2f; color: white; padding: 14px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; font-size: 16px; display: inline-block; }
-        .btn:hover { background-color: #b71c1c; box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4); }
-        .timer { color: #d32f2f; font-weight: bold; }
+        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; padding: 0 15px; }
+        .console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); max-width: 90%; }
+        h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; font-size: 18px; }
+        p { margin: 8px 0; font-size: 14px; color: #888; }
+        .status { color: #00ff00; font-weight: bold; }
+        .secured-text { margin-top: 20px; font-size: 12px; color: #555; }
 
         /* Desktop Responsiveness */
         @media (min-width: 768px) {
-            h1 { font-size: 160px; }
-            h2 { font-size: 32px; }
-            p { font-size: 20px; }
-            .btn { font-size: 18px; padding: 18px 40px; }
+            .console-box { padding: 50px 70px; }
+            h3 { font-size: 26px; margin-bottom: 25px; }
+            p { font-size: 18px; margin: 12px 0; }
+            .secured-text { font-size: 15px; margin-top: 30px; }
         }
     </style>
-    <script defer>
-        setTimeout(function() { window.location.href = "https://www.earthinsider.in"; }, 5000);
-    </script>
 </head>
 <body>
-    <h1>404</h1>
-    <h2>System Route Not Found</h2>
-    <p>The secure endpoint you are looking for does not exist or has been relocated.<br>You are being securely redirected to the main portal in <span id="time" class="timer">5</span> seconds...</p>
-    <a href="https://www.earthinsider.in" class="btn">Return to Earth Insider</a>
+    <div class="console-box">
+        <h3>RESTRICTED SYSTEM ENDPOINT</h3>
+        <p>Service: <span class="status">Active & Running</span></p>
+        <p>This is an automated background service worker for Earth Insider.</p>
+        <p>Direct client access is not required.</p>
+        <p class="secured-text">Secured by Earth Insider Network</p>
+    </div>
     <script defer>
-        let timeLeft = 5;
-        setInterval(() => { timeLeft--; if(timeLeft > 0) document.getElementById('time').innerText = timeLeft; }, 1000);
+        // Security Fix: Target origin set specifically to earthinsider.in
+        window.parent.postMessage({ action: 'check_permission', status: Notification.permission }, 'https://www.earthinsider.in');
     </script>
 </body>
 </html>
