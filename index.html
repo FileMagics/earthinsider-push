@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Enable Alerts - Earth Insider</title>
 <link rel="icon" type="image/x-icon" href="https://www.earthinsider.in/favicon.ico">
-
-<style>
+<link rel="preconnect" href="https://www.gstatic.com"> <style>
 body{ text-align:center; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; margin-top:60px; background-color:#121212; color:#ffffff; padding: 0 15px; }
 h2{ font-weight:600; letter-spacing:0.5px; font-size: 24px; }
 #status-text{ font-size:15px; color:#b3b3b3; margin-top:20px; line-height:1.6; }
@@ -60,7 +59,11 @@ const statusText=document.getElementById('status-text');
 const spinner=document.getElementById('loading-spinner');
 
 try{
-const permission=await Notification.requestPermission();
+let permission = Notification.permission;
+if(permission !== 'granted') {
+    permission = await Notification.requestPermission();
+}
+
 if(permission==='granted'){
 statusText.innerHTML="Permission granted.<br>Initializing background service...";
 const registration=await navigator.serviceWorker.register('./firebase-messaging-sw.js',{scope:'./'});
@@ -83,7 +86,7 @@ document.body.innerHTML=
 "<h2 style='color:#4CAF50;margin-top:60px;'>✅ Subscription Confirmed</h2>\
 <p style='color:#b3b3b3;line-height:1.6;'>You are now successfully registered for real-time updates.<br>This window will close automatically in 2 seconds.</p>";
 if(window.opener){
-window.opener.postMessage({action:'permission_granted'},'*');
+window.opener.postMessage({action:'permission_granted'},'https://www.earthinsider.in');
 }
 setTimeout(()=>{
 window.close();
@@ -121,6 +124,7 @@ Return to Earth Insider
 `;
 }
 }
+
 initPushSubscription();
 </script>
 </body>
