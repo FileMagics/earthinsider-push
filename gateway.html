@@ -56,13 +56,16 @@ body { margin: 0; background-color: #121212; display: flex; justify-content: cen
 </div>
 
 <script defer>
-const urlParams=new URLSearchParams(window.location.search);
-const destination=urlParams.get('go');
-if(destination){
-document.getElementById('user-ui').style.display='block';
-setTimeout(()=>{ window.location.replace(destination); },1000);
-}else{
-document.getElementById('system-ui').style.display='block';
+const urlParams = new URLSearchParams(window.location.search);
+const destination = urlParams.get('go');
+
+if (destination && (destination.startsWith('https://www.earthinsider.in') || destination.startsWith('https://earthinsider.in'))) {
+    document.getElementById('user-ui').style.display = 'block';
+    setTimeout(() => { 
+        window.location.replace(destination); 
+    }, 1000);
+} else {
+    document.getElementById('system-ui').style.display = 'block';
 }
 </script>
 </body>
