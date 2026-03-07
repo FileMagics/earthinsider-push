@@ -33,7 +33,6 @@
     <script defer>
         const payload = { action: 'check_permission', status: Notification.permission };
         
-        // STRICT SECURITY: Sending data ONLY to exact authorized domains, strictly avoiding '*'
         window.parent.postMessage(payload, 'https://www.earthinsider.in');
         window.parent.postMessage(payload, 'https://earthinsider.in');
     </script>
