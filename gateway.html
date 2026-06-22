@@ -75,7 +75,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const destination = urlParams.get('go');
 
 if (destination) {
-    if (destination.startsWith('https://www.earthinsider.in') || destination.startsWith('https://earthinsider.in')) {
+    if (destination.startsWith('https://www.earthinsider.in') ||
+        destination.startsWith('https://earthinsider.in') ||
+        destination.startsWith('https://push.earthinsider.in')) {
         document.getElementById('user-ui').style.display = 'block';
         setTimeout(() => { 
             window.location.replace(destination); 
