@@ -1,26 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>System Endpoint - Earth Insider</title>
     <style>
-        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Courier New', Courier, monospace; text-align: center; margin-top: 15vh; padding: 0 15px; }
-        .console-box { background: #111; padding: 30px; border-radius: 8px; display: inline-block; border: 1px solid #333; box-shadow: 0 0 20px rgba(0, 255, 0, 0.05); max-width: 90%; }
-        h3 { margin: 0 0 15px 0; color: #ffffff; letter-spacing: 1px; font-size: 18px; }
-        p { margin: 8px 0; font-size: 14px; color: #888; }
-        .status { color: #00ff00; font-weight: bold; }
-        .secured-text { margin-top: 20px; font-size: 12px; color: #555; }
+        body {
+            background-color: #0a0a0a;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin-top: 15vh;
+            padding: 0 15px;
+        }
+
+        .console-box {
+            background: #111;
+            padding: 30px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.05);
+            max-width: 90%;
+        }
+
+        h3 {
+            margin: 0 0 15px 0;
+            color: #ffffff;
+            letter-spacing: 1px;
+            font-size: 18px;
+        }
+
+        p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .status {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .secured-text {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
 
         /* Desktop Responsiveness */
         @media (min-width: 768px) {
-            .console-box { padding: 50px 70px; }
-            h3 { font-size: 26px; margin-bottom: 25px; }
-            p { font-size: 18px; margin: 12px 0; }
-            .secured-text { font-size: 15px; margin-top: 30px; }
+            .console-box {
+                padding: 50px 70px;
+            }
+
+            h3 {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+
+            p {
+                font-size: 18px;
+                margin: 12px 0;
+            }
+
+            .secured-text {
+                font-size: 15px;
+                margin-top: 30px;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="console-box">
         <h3>RESTRICTED SYSTEM ENDPOINT</h3>
@@ -29,12 +81,23 @@
         <p>Direct client access is not required.</p>
         <p class="secured-text">Secured by Earth Insider Network</p>
     </div>
-    
+
     <script defer>
-        const payload = { action: 'check_permission', status: Notification.permission };
-        
-        window.parent.postMessage(payload, 'https://www.earthinsider.in');
-        window.parent.postMessage(payload, 'https://earthinsider.in');
+        const payload = {
+            action: 'check_permission',
+            status: Notification.permission
+        };
+
+        const parentOrigin = window.location.origin;
+
+        if (
+            parentOrigin === 'https://earthinsider.in' ||
+            parentOrigin === 'https://www.earthinsider.in' ||
+            parentOrigin.endsWith('.earthinsider.in')
+        ) {
+            window.parent.postMessage(payload, parentOrigin);
+        }
     </script>
 </body>
+
 </html>
