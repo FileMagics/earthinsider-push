@@ -82,21 +82,31 @@
         <p class="secured-text">Secured by Earth Insider Network</p>
     </div>
 
-    <script defer>
-        const payload = {
-            action: 'check_permission',
-            status: Notification.permission
-        };
+    <script>
+        (function() {
+                if (!('Notification' in window)) {
+                    return;
+                }
 
-        const parentOrigin = window.location.origin;
+                const payload = {
+                    action: 'check_permission',
+                    status: Notification.permission
+                };
 
-        if (
-            parentOrigin === 'https://earthinsider.in' ||
-            parentOrigin === 'https://www.earthinsider.in' ||
-            parentOrigin.endsWith('.earthinsider.in')
-        ) {
-            window.parent.postMessage(payload, parentOrigin);
-        }
+                window.addEventListener('message', function(event) {
+                    const origin = event.origin;
+
+                    const allowed =
+                        origin === 'https://earthinsider.in' ||
+                        origin === 'https://www.earthinsider.in' ||
+                        origin.endsWith('.earthinsider.in');
+
+                    if (!allowed) return;
+
+                    if (event.data?.action === 'check_permission') {
+                        console.log('Notification permission:', event.data.status);
+                    }
+                });
     </script>
 </body>
 
