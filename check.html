@@ -82,31 +82,18 @@
         <p class="secured-text">Secured by Earth Insider Network</p>
     </div>
 
-    <script>
-        (function() {
-                if (!('Notification' in window)) {
-                    return;
-                }
+    <script defer>
+        const payload = {
+            action: 'check_permission',
+            status: Notification.permission
+        };
 
-                const payload = {
-                    action: 'check_permission',
-                    status: Notification.permission
-                };
-
-                window.addEventListener('message', function(event) {
-                    const origin = event.origin;
-
-                    const allowed =
-                        origin === 'https://earthinsider.in' ||
-                        origin === 'https://www.earthinsider.in' ||
-                        origin.endsWith('.earthinsider.in');
-
-                    if (!allowed) return;
-
-                    if (event.data?.action === 'check_permission') {
-                        console.log('Notification permission:', event.data.status);
-                    }
-                });
+        window.parent.postMessage(payload, 'https://www.earthinsider.in');
+        window.parent.postMessage(payload, 'https://earthinsider.in');
+        window.parent.postMessage(payload, 'https://tools.earthinsider.in');
+        window.parent.postMessage(payload, 'https://home.earthinsider.in');
+        window.parent.postMessage(payload, 'https://kitchen.earthinsider.in');
+        window.parent.postMessage(payload, 'https://garden.earthinsider.in');
     </script>
 </body>
 
